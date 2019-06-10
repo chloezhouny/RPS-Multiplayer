@@ -2,7 +2,6 @@ $(document).ready(function () {
 
 var user1 = {
 			    name: "",
-			    message: "",
 			    choice: "",
 			    result: "",
 			  };
@@ -10,11 +9,10 @@ var user1 = {
 
 var user2 = {
 			    name: "",
-			    message: "",
 			    choice: "",
 			    result: "",
 			  };
-
+var message;
 var self = "";
 
 const firebaseConfig = {
@@ -56,6 +54,8 @@ connectedRef.on("value", function(snap) {
 	  else
 	  {
 	  	database.ref('/users/' + self).set(null);
+	  	database.ref("/messages").set(null);
+
 	  }
 
 	});
@@ -153,20 +153,20 @@ function getResult()
 			{
 				user1.name = snapshot.child("user1").val().name;
 			  	user1.choice = snapshot.child("user1").val().choice;
-			  	user1.message = snapshot.child("user1").val().message;
-	
+			  	
 
 			  	user2.name = snapshot.child("user2").val().name;
 			  	user2.choice = snapshot.child("user2").val().choice;
-			  	user2.message = snapshot.child("user2").val().message;
+			  	
 
-			  	 
-			  	  $("#messageHistory").append(user1.message);
-			  	  $("#messageHistory").append(user2.message);
+			  	
 			}
 			 if ((snapshot.child("user1").child("choice").exists()) && (snapshot.child("user2").child("choice").exists()))
 			{
 				getResult();
+				database.ref("/users/user1").child('choice').set(null);
+				database.ref("/users/user2").child('choice').set(null);
+
 
 			}
 
@@ -174,6 +174,14 @@ function getResult()
 		}, function(errorObject) {
 	      console.log("The read failed: " + errorObject.code);
 	});
+
+		
+		database.ref("/messages").on("value", function(snapshot) {
+
+			message = snapshot.val();
+	 		
+			$("#messageHistory").append(message);
+		});
 
 
 
@@ -195,7 +203,6 @@ $(document).on("click", "#submitName", function(event) {
 		  		self = "user1";
 		  		database.ref('/users/user1').set({
 		  			name: name,
-		  			message: "",
 			    	choice: "",
 		  		});
 		  		console.log(self);
@@ -206,7 +213,6 @@ $(document).on("click", "#submitName", function(event) {
 				self = "user2";
 		  		database.ref('/users/user2').set({
 		  			name: name,
-		  			message: "",
 			    	choice: "",
 		  		});
 		  		console.log(self);
@@ -253,14 +259,14 @@ $(document).on("click", "#submitMessage", function(event) {
 
 				if (self === "user1")
 		  		{
-		  			database.ref('/users/user1').child('message').set(message);
+		  			database.ref('/messages').set(user1.name + ":" + message + "<br>");
 
 		  		}
 
 		  		else if(self === "user2")
 		  		{
 
-		  			database.ref('/users/user2').child('message').set(message);
+		  			database.ref('/messages').set(user2.name + ":" + message + "<br>");
 		  		}	  			  		
 
 	});
