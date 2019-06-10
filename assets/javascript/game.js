@@ -62,109 +62,16 @@ connectedRef.on("value", function(snap) {
 
 
 
-		database.ref("/users").on("value", function(snapshot) {
-	  		
-	  		console.log(snapshot.val());
-
-			if ((snapshot.child("user1").exists()) && (snapshot.child("user2").exists()))
-			{
-				user1.name = snapshot.child("user1").val().name;
-			  	user1.choice = snapshot.child("user1").val().choice;
-			  	user1.message = snapshot.child("user1").val().message;
-	
-
-			  	user2.name = snapshot.child("user2").val().name;
-			  	user2.choice = snapshot.child("user2").val().choice;
-			  	user2.message = snapshot.child("user2").val().message;
-
-			  	 
-			  	  $("#messageHistory").append(user1.message);
-			  	  $("#messageHistory").append(user2.message);
-			}
-			else
-			{
-
-			}
-
-			console.log(snapshot.val());
-		}, function(errorObject) {
-	      console.log("The read failed: " + errorObject.code);
-	});
-
-
-
-
-
-
-
-$(document).on("click", "#submitName", function(event) {
-  event.preventDefault();
-  
-  var name = $("#name").val();
-
-  // Grabs user input 
-   database.ref("/users").once('value', function(snapshot)
-	  {
-	  		console.log(snapshot.val());
-		  	if (!snapshot.hasChild('user1'))
-		  	{
-		  		self = "user1";
-		  		database.ref('/users/user1').set({
-		  			name: name,
-		  			message: "",
-			    	choice: null,
-		  		});
-		  		console.log(self);
-
-		  	}
-		  	else if (!snapshot.hasChild('user2'))
-			{
-				self = "user2";
-		  		database.ref('/users/user2').set({
-		  			name: name,
-		  			message: "",
-			    	choice: null,
-		  		});
-		  		console.log(self);
-		  	}
-		  	else 
-		  	{
-		  		alert("Only two users are allowed to play.");
-		  	}
-	  })   
-    });
-
-
-$(document).on("click", ".choices", function(event) {
-  	event.preventDefault();
-
-  // Grabs user choice 
-    var choice = $(this).attr("data-choice");
-    console.log(choice);
-
-	  		if (self === "user1")
-	  		{
-	  			console.log()
-	  			database.ref("/users/user1").child('choice').set(choice);
-	  		}
-
-	  		else if (self === "user2")
-	  		{
-
-	  			database.ref("/users/user2").child('choice').set(choice);
-	  		}
-		  	
-
-
 // Get results for user1 and user2
-	
+function getResult()
+{
 	  var user1Choice = user1.choice;
 	  var user2Choice = user2.choice;
 
 	  console.log(user1Choice);
 	  console.log(user2Choice);
 
-	  if ((user1Choice !== null) && (user2Choice !== null))
+	  if ((user1Choice !== "") && (user2Choice !== ""))
 	  {
 	  	user1Choice = user1.choice;
 	    user2Choice = user2.choice;
@@ -225,17 +132,112 @@ $(document).on("click", ".choices", function(event) {
 			if (self === "user1")
 	  		{
 	  			$("#result").text(user1.result);
-	  			
-				database.ref("/users/user1").child('choice').set(null);
+				
 	
 	  		}
 
-	  		else (self === "user2")
+	  		else if (self === "user2")
 	  		{
 	  			$("#result").text(user2.result);
-	  			database.ref("/users/user2").child('choice').set(null);
+	  			
 	  		}
 	}
+}
+
+
+		database.ref("/users").on("value", function(snapshot) {
+	  		
+	  		console.log(snapshot.val());
+
+			if ((snapshot.child("user1").exists()) && (snapshot.child("user2").exists()))
+			{
+				user1.name = snapshot.child("user1").val().name;
+			  	user1.choice = snapshot.child("user1").val().choice;
+			  	user1.message = snapshot.child("user1").val().message;
+	
+
+			  	user2.name = snapshot.child("user2").val().name;
+			  	user2.choice = snapshot.child("user2").val().choice;
+			  	user2.message = snapshot.child("user2").val().message;
+
+			  	 
+			  	  $("#messageHistory").append(user1.message);
+			  	  $("#messageHistory").append(user2.message);
+			}
+			 if ((snapshot.child("user1").child("choice").exists()) && (snapshot.child("user2").child("choice").exists()))
+			{
+				getResult();
+
+			}
+
+			console.log(snapshot.val());
+		}, function(errorObject) {
+	      console.log("The read failed: " + errorObject.code);
+	});
+
+
+
+
+
+
+
+$(document).on("click", "#submitName", function(event) {
+  event.preventDefault();
+  
+  var name = $("#name").val();
+
+  // Grabs user input 
+   database.ref("/users").once('value', function(snapshot)
+	  {
+	  		console.log(snapshot.val());
+		  	if (!snapshot.hasChild('user1'))
+		  	{
+		  		self = "user1";
+		  		database.ref('/users/user1').set({
+		  			name: name,
+		  			message: "",
+			    	choice: "",
+		  		});
+		  		console.log(self);
+
+		  	}
+		  	else if (!snapshot.hasChild('user2'))
+			{
+				self = "user2";
+		  		database.ref('/users/user2').set({
+		  			name: name,
+		  			message: "",
+			    	choice: "",
+		  		});
+		  		console.log(self);
+		  	}
+		  	else 
+		  	{
+		  		alert("Only two users are allowed to play.");
+		  	}
+	  })   
+    });
+
+
+$(document).on("click", ".choices", function(event) {
+  	event.preventDefault();
+
+  // Grabs user choice 
+    var choice = $(this).attr("data-choice");
+    console.log(choice);
+
+	  		if (self === "user1")
+	  		{
+	  			console.log()
+	  			database.ref("/users/user1").child('choice').set(choice);
+	  		}
+
+	  		else if (self === "user2")
+	  		{
+
+	  			database.ref("/users/user2").child('choice').set(choice);
+	  		}
+		  	
 
 
 
@@ -255,7 +257,7 @@ $(document).on("click", "#submitMessage", function(event) {
 
 		  		}
 
-		  		else (self === "user2")
+		  		else if(self === "user2")
 		  		{
 
 		  			database.ref('/users/user2').child('message').set(message);
