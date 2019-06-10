@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RPS-Multiplayer</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="assets/css/reset.css">
+
+  	<!-- Bootstrap References -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/css/uikit.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="assets/css/style.css">
+   
+       <!-- Firebase References -->
+	  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+	  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+</head>
+<body>
+	<header>
+		<div class = "container">
+			<nav class="navbar d-flex flex-column pb-4 pt-5" id="navBar">
+			  		<h3> Rock Papper and Scissors</h3>
+  			</nav>
+		</div>
+	</header>
+
+	<main>
+
+		<div class = "container">
+			<div class = "row justify-content-center d-flex my-5">
+				<div class = "col-8">
+					<form class="form-inline d-block" id='search'>
+				    				<input class="form-control form-control-sm mr-sm-2 bg-light" type="search" placeholder="Enter your name" id = "name" aria-label="name">
+				    				<button class="btn btn-light btn-sm " type="submit" id="submitName">↖︎</button>
+				  	</form>
+			 	</div>
+		 	</div>
+
+		 	<div class = "row justify-content-center d-flex my-5">
+				<div class = "col-8" id = "choicesContainer">
+					<button class = "btn btn-dark choices" data-choice = "rock" type = "button">Rock</button>
+					<button class = "btn btn-dark choices" data-choice = "paper" type = "button">Papper</button>
+					<button class = "btn btn-dark choices" data-choice = "scissors" type = "button">scissors</button>				
+			 	</div>
+		 	</div>
+
+		 	<div class = "row justify-content-center d-flex my-5">
+				<div class = "col-8" id = "result">
+					Result here: 
+			 	</div>
+		 	</div>
+		  	
+		  	
+		 	<div class = "row justify-content-center d-flex my-5">
+				<div class = "col-8 form-group" id = "messageHistory">
+					Message History: 
+  				</div>
+		 	</div>  
+
+		 	<div class = "row justify-content-center d-flex my-5">
+				<div class = "col-8 form-group" id = "messageContainer">
+				    <label for="message">Type your message to your opponent here: </label>
+				    <textarea class="form-control" id="message" rows="1"></textarea>
+				    <button class="btn btn-light btn-sm " type="submit" id="submitMessage">↖︎</button>
+  				</div>
+		 	</div>
+	
+
+		</div>
+
+
+	</main>
+
+ <!-- Javascript  -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit-icons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src= "assets/javascript/game.js"></script>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- <script src="/__/firebase/6.1.1/firebase-app.js"></script>
+
+TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#reserved-urls
+ -->
+<!-- Initialize Firebase -->
+<!-- <script src="/__/firebase/init.js"></script> -->
+
+
+<body>
+
+</html>

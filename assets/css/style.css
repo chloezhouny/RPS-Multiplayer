@@ -1,0 +1,51 @@
+
+html
+{
+	min-height:100vh;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+
+body
+{
+	background-color: #F0F0F0;
+	background-size: cover;
+	min-height: 100vh;
+}
+
+
+/*header*/
+header
+{
+	background-color: black;
+	width: 100%;
+	float: left;
+	height: 15%;
+}
+
+main
+{
+	min-height: 100vh;
+	clear: both;
+}
+
+
+
+#navBar h3
+{
+	background-color: black;
+	color: white;
+	position: relative;
+	right: 8%;
+	
+}
+
+#navBar
+{
+	float: left;
+	width: 30%;
+	position: relative;
+	right: 2%;
+
+
+}
