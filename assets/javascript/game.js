@@ -6,138 +6,149 @@ $(document).ready(function () {
     }
 	});
 
-		//Give light
-		var result;
-		var scene = new THREE.Scene();
-			var pointLight = new THREE.PointLight( 0xffffff, 1.5, 300);
-			pointLight.position.set( 100, 0, 100 );
-			scene.add( pointLight );
-			var pointLight = new THREE.PointLight( 0xffffff, 1.5, 300 );
-			pointLight.position.set( -70, 0, 100 );
-			scene.add( pointLight );
 
-		//Camera
-		var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-		//Display
-		var renderer = new THREE.WebGLRenderer();
-		renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
-		document.body.appendChild(renderer.domElement );
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
+	//Canvas for Dices 
 
 
 
-		// var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-		var material = 	new THREE.MeshStandardMaterial({metalness: 0.2, roughness: 0.2});;
-		
-		//load dice.stl, create cubes and animate
+	var target1 = "sissors";
+	var target2 = "sissors";
+
+
+	//Give light
+	var result;
+	var scene = new THREE.Scene();
+		var pointLight = new THREE.PointLight( 0xffffff, 1.5, 300);
+		pointLight.position.set( 100, 0, 100 );
+		scene.add( pointLight );
+		var pointLight = new THREE.PointLight( 0xffffff, 1.5, 300 );
+		pointLight.position.set( -70, 0, 100 );
+		scene.add( pointLight );
+
+	//Camera
+	var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+	//Display
+	var renderer = new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
+	document.body.appendChild(renderer.domElement );
+
+
+
+	// var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+	var material = 	new THREE.MeshStandardMaterial({metalness: 0.2, roughness: 0.2});;
+	
+	//load dice.stl, create cubes and animate
 		var loader = new THREE.STLLoader();
 		camera.position.z = 100;
-			loader.load( 'assets/images/Dice1.stl', function ( geometry ) {
+		loader.load( 'assets/images/Dice1.stl', function ( geometry ) {
 
+			cube = new THREE.Mesh( geometry, material);
+			cube.position.x = -50;
+			scene.add(cube);
 
-				cube = new THREE.Mesh( geometry, material);
-				cube.position.x = -50;
-				scene.add(cube);
-
-				cube2 = new THREE.Mesh( geometry, material);
-				cube2.position.x = 50;
-			animate()
-			scene.add(cube2);  		
+			cube2 = new THREE.Mesh( geometry, material);
+			cube2.position.x = 50;			
+			scene.add(cube2); 
 			renderer.render( scene, camera );	
-			 });
+		 });
 
 
-			//Stop points for 3 results 
-			var paper1 = [0.3,-1.6, 0.4];
-			var rock1 = [1.8, -1.65, 0.3];
-			var scissors1 = [0, 0, 0];
+	//Stop points for 3 results 
+	var dict1 = {
+	 'paper' :[0.3,-1.6, 0.4],
+	 'rock' : [1.8, -1.65, 0.3],
+	'scissor' : [0, 0, 0]
+	}
 
-			var paper2 = [-0.05, 1.5, -0.2];
-			var rock2 = [-1.2, 1.55, -0.3];
-			var scissors2 = [0,0,0];
-			var speed = 0.3;   			
-			var rotate = true;
+	var dict2 = {
+	 'paper' :[-0.05, 1.5, -0.2],
+	 'rock' : [-1.2, 1.55, -0.3],
+	 'scissor':  [0, 0, 0]
+	}
 
-			var target1 = paper1;
-  			var target2 = rock2;
+	var speed = 0.3;   			
+	var rotate = true;
 
+	
 
-  			var IsSameAngle = function(x, y)
-  			{
-  				var diff = Math.abs(x - y);
-  				return Math.abs(diff-Math.round(diff / Math.PI) * Math.PI) < 0.006;
-  			}
-
-		 	var animate = function () {
-			 	
-			 	requestAnimationFrame( animate );
-
-			 	if (rotate)
-			 	{
-			 		if (speed < 0.01)
-				 	{
-				 		rotate = false;
-				 		if (!IsSameAngle(cube.rotation.x, target1[0]))
-				 		{
-			 				cube.rotation.x -= speed;
-			 				rotate = true;
-				 		}
-				 		if (!IsSameAngle(cube.rotation.y, target1[1]))
-				 		{
-			 				cube.rotation.y -= speed;
-			 				rotate = true;
-				 		}
-				 		if (!IsSameAngle(cube.rotation.z, target1[2]))
-				 		{
-			 				cube.rotation.z -= speed;
-			 				rotate = true;
-				 		}
-				 		if (!IsSameAngle(cube2.rotation.x, target2[0]))
-				 		{
-			 				cube2.rotation.x -= speed;
-			 				rotate = true;
-				 		}
-				 		if (!IsSameAngle(cube2.rotation.y, target2[1]))
-				 		{
-			 				cube2.rotation.y -= speed;
-			 				rotate = true;
-				 		}
-				 		if (!IsSameAngle(cube2.rotation.z, target2[2]))
-				 		{
-			 				cube2.rotation.z -= speed;
-			 				rotate = true;
-				 		}
-				 	}
-				 	else
-				 	{
-					 	cube.rotation.x -= speed;
-					 	cube.rotation.y -= speed;
-					 	//cube.rotation.z -= speed * 3;
-
-					 	cube2.rotation.x -= speed * 0.8;
-					 	cube2.rotation.y -= speed * 1.2;
-					 	//cube2.rotation.z -= speed;
-					 	speed = speed - 0.001;
-				 	}
-
-			 
-			 	renderer.render( scene, camera );	
-
-			 	}
-			 }
+	//Compare end point angle
+	var IsSameAngle = function(x, y)
+	{
+		var diff = Math.abs(x - y);
+		return Math.abs(diff-Math.round(diff / Math.PI) * Math.PI) < 0.006;
+	}
 
 
+	//roll dice animation
+ 	var animate = function () {
+	 	
+	 	requestAnimationFrame( animate );
 
+	 	if (rotate)
+	 	{
+	 		if (speed < 0.01)
+		 	{
+		 		rotate = false;
+		 		if (!IsSameAngle(cube.rotation.x, target1[0]))
+		 		{
+	 				cube.rotation.x -= speed;
+	 				rotate = true;
+		 		}
+		 		if (!IsSameAngle(cube.rotation.y, target1[1]))
+		 		{
+	 				cube.rotation.y -= speed;
+	 				rotate = true;
+		 		}
+		 		if (!IsSameAngle(cube.rotation.z, target1[2]))
+		 		{
+	 				cube.rotation.z -= speed;
+	 				rotate = true;
+		 		}
+		 		if (!IsSameAngle(cube2.rotation.x, target2[0]))
+		 		{
+	 				cube2.rotation.x -= speed;
+	 				rotate = true;
+		 		}
+		 		if (!IsSameAngle(cube2.rotation.y, target2[1]))
+		 		{
+	 				cube2.rotation.y -= speed;
+	 				rotate = true;
+		 		}
+		 		if (!IsSameAngle(cube2.rotation.z, target2[2]))
+		 		{
+	 				cube2.rotation.z -= speed;
+	 				rotate = true;
+		 		}
+		 	}
+		 	else
+		 	{
+			 	cube.rotation.x -= speed;
+			 	cube.rotation.y -= speed;
+			 	//cube.rotation.z -= speed * 3;
 
+			 	cube2.rotation.x -= speed * 0.8;
+			 	cube2.rotation.y -= speed * 1.2;
+			 	//cube2.rotation.z -= speed;
+			 	speed = speed - 0.001;
+		 	}
 
+	 
+	 	renderer.render( scene, camera );	
 
-
-
-
+	 	}
+	 }
 
 
 
-// Firebase
+
+
+
+
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
+	//Firbase
 	const firebaseConfig = {
 	  apiKey: "AIzaSyCmaNJzL_ZrCwE1DTPCdB0YkCICRCUImBM",
 	  authDomain: "rpg-multiplayer-7748c.firebaseapp.com",
@@ -152,7 +163,9 @@ $(document).ready(function () {
 	var database = firebase.database();
 
 
-	// -------------------------------------------------------------- (CRITICAL - BLOCK) --------------------------- //
+
+
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
 	// connectionsRef references a specific location in our database.
 	// All of our connections will be stored in this directory.
 	var connectionsRef = database.ref("/connections");
@@ -165,6 +178,7 @@ $(document).ready(function () {
 	// When the client's connection state changes...
 	connectedRef.on("value", function(snap) {
 
+
 		  // If they are connected..
 		  if (snap.val()) {
 
@@ -176,25 +190,30 @@ $(document).ready(function () {
 		  }
 		  else
 		  {
-		  	database.ref('/users/' + self).set(null);
+		  	database.ref('/users/').set(null);
 		  	database.ref("/messages").set(null);
-
 		  }
-
 		});
 
 
 
+
+
+
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
 	var user1 = {
 				    name: "",
 				    choice: "",
 				    result: "",
+				    allow: ""
 				  };
 
 	var user2 = {
 				    name: "",
 				    choice: "",
 				    result: "",
+				    allow: ""
+
 				  };
 	var message;
 	var self = "";
@@ -203,18 +222,16 @@ $(document).ready(function () {
 
 
 
-
-	// Get results for user1 and user2
+	// Get game for user1 and user2
 	function getResult()
 	{
 		  var user1Choice = user1.choice;
 		  var user2Choice = user2.choice;
 
+
 		  console.log(user1Choice);
 		  console.log(user2Choice);
 
-		  if ((user1Choice !== "") && (user2Choice !== ""))
-		  {
 		  	user1Choice = user1.choice;
 		    user2Choice = user2.choice;
 
@@ -231,38 +248,38 @@ $(document).ready(function () {
 				console.log("else");
 				if ((user1Choice=== "rock") && (user2Choice === "paper") )
 				{
-					user1.result = "Lose";
-					user2.result = "Win";		
+					user1.result = "You Lose";
+					user2.result = "You Win";		
 				}
 
 				else if ((user1Choice === "rock") && (user2Choice === "scissors"))
 				{
-					user1.result= "Win";
-					user2.result = "Lose";		
+					user1.result= "You Win";
+					user2.result = "You Lose";		
 				}
 
 				else if ((user1Choice === "paper") && (user2Choice === "rock"))
 				{
-					user1.result = "Win";
-					user2.result = "Lose";		
+					user1.result = "You Win";
+					user2.result = "You Lose";		
 				}
 
 				else if ((user1Choice === "paper") && (user2Choice === "scissors")) 
 				{
-					user1.result = "Lose";
-					user2.result = "Win";		
+					user1.result = "You Lose";
+					user2.result = "You Win";		
 				}
 
 				else if ((user1Choice === "scissors") && (user2Choice === "paper")) 
 				{
-					user1.result = "Win";
-					user2.result= "Lose";		
+					user1.result = "You Win";
+					user2.result= "You Lose";		
 				}
 
 				else if ((user1Choice === "scissors") && (user2Choice === "rock")) 
 				{
-					user1.result = "Lose";
-					user2.result = "Win";		
+					user1.result = "You Lose";
+					user2.result = "You Win";		
 				}
 
 			}
@@ -283,16 +300,21 @@ $(document).ready(function () {
 		  			$("#result").text(user2.result);
 		  			
 		  		}
-		}
+		
 	}
 
 
+// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
+//Start Game
+	$("#nameContainer").show(); 
+	$("#choiceContainer").hide();
+	var start = false;
 
 
 
 
 
-
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
 	//users name and choice value change listener 
 	database.ref("/users").on("value", function(snapshot) {
   		
@@ -306,15 +328,40 @@ $(document).ready(function () {
 
 		  	user2.name = snapshot.child("user2").val().name;
 		  	user2.choice = snapshot.child("user2").val().choice;
-		  	
+		  	$("#choiceContainer").show();
+			$("#startContainer").hide();
 
 		  	
 		}
-		 if ((snapshot.child("user1").child("choice").exists()) && (snapshot.child("user2").child("choice").exists()))
+		 if ((snapshot.child("user1").child("choice").exists() && (snapshot.child("user2").child("choice").exists())))
 		{
-			getResult();
-			database.ref("/users/user1").child('choice').set(null);
-			database.ref("/users/user2").child('choice').set(null);
+			if (self === "user1")
+			{
+				target1 = dict1[user1.choice];
+				target2 = dict2[user1.choice]
+			}
+			else if (self === "user2")
+			{
+				target2 = dict1[user1.choice];
+				target1 = dict2[user2.choice];
+			}
+
+			animate();
+			setTimeout(function(){
+				
+				getResult();
+				setTimeout(function()
+				{
+					$("#result").html("");
+							
+					database.ref("/users/user1").child('choice').set(null);
+					database.ref("/users/user2").child('choice').set(null);
+
+				}, 10000);
+
+				
+			}, 10000);
+			
 
 
 		}
@@ -329,7 +376,7 @@ $(document).ready(function () {
 
 
 	
-
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
 	//users message value change listener 
 	database.ref("/messages").on("value", function(snapshot) {
 
@@ -346,7 +393,7 @@ $(document).ready(function () {
 
 
 
-
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
 	//Submit Name on click
 	$(document).on("click", "#submitName", function(event) {
 	  event.preventDefault();
@@ -363,24 +410,26 @@ $(document).ready(function () {
 			  		self = "user1";
 			  		database.ref('/users/user1').set({
 			  			name: name,
-				    	choice: "",
 			  		});
 			  		console.log(self);
-
+			  		$("#nameContainer").hide();		
 			  	}
 			  	else if (!snapshot.hasChild('user2'))
 				{
 					self = "user2";
 			  		database.ref('/users/user2').set({
 			  			name: name,
-				    	choice: "",
 			  		});
 			  		console.log(self);
-
+			  		$("#nameContainer").hide();		
+			  		
+			  		start = true;
+			  		
 			  	}
 			  	else 
-			  	{
+			  	{		  		
 			  		alert("Only two users are allowed to play.");
+
 			  	}
 		  })   
 	    });
@@ -392,11 +441,12 @@ $(document).ready(function () {
 
 
 
+
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
 	//submit choice on click
 	$(document).on("click", ".choices", function(event) {
 
 	  	event.preventDefault();
-
 		  // Grabs user choice 
 		    var choice = $(this).attr("data-choice");
 		    console.log(choice);
@@ -412,8 +462,6 @@ $(document).ready(function () {
 
 			  			database.ref("/users/user2").child('choice').set(choice);
 			  		}
-				  	
-
 				
 	});
 
@@ -423,7 +471,7 @@ $(document).ready(function () {
 
 
 
-
+	// ------------------------------------ (CRITICAL - BLOCK) --------------------------- //
 	//submit message onclick
 	$(document).on("click", "#submitMessage", function(event) {
 
@@ -442,8 +490,5 @@ $(document).ready(function () {
 			  		}	  			  		
 
 		});
-
-
-
 
 });

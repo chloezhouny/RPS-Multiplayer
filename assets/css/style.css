@@ -26,9 +26,11 @@ header
 #navBar h3
 {
 	background-color: black;
-	color: white;
+	color: pink;
 	position: relative;
 	right: 8%;
+	font-family: 'Lobster Two', cursive;
+	font-weight: 1000;
 	
 }
 
@@ -80,4 +82,13 @@ canvas
 #messageHistory
 {
 	overflow: hidden;
+}
+
+#nameContainer
+{
+	margin-top: 4%;
+}
+#chatContainer
+{
+	margin-top: 7%;
 }
