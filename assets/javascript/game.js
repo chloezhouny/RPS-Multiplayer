@@ -1,21 +1,143 @@
 $(document).ready(function () {
 
-	var user1 = {
-				    name: "",
-				    choice: "",
-				    result: "",
-				  };
+	jQuery.ajaxPrefilter(function(options) {
+    if (options.crossDomain && jQuery.support.cors) {
+        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+	});
+
+		//Give light
+		var result;
+		var scene = new THREE.Scene();
+			var pointLight = new THREE.PointLight( 0xffffff, 1.5, 300);
+			pointLight.position.set( 100, 0, 100 );
+			scene.add( pointLight );
+			var pointLight = new THREE.PointLight( 0xffffff, 1.5, 300 );
+			pointLight.position.set( -70, 0, 100 );
+			scene.add( pointLight );
+
+		//Camera
+		var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+		//Display
+		var renderer = new THREE.WebGLRenderer();
+		renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
+		document.body.appendChild(renderer.domElement );
 
 
-	var user2 = {
-				    name: "",
-				    choice: "",
-				    result: "",
-				  };
-	var message;
-	var self = "";
+
+		// var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var material = 	new THREE.MeshStandardMaterial({metalness: 0.2, roughness: 0.2});;
+		
+		//load dice.stl, create cubes and animate
+		var loader = new THREE.STLLoader();
+		camera.position.z = 100;
+			loader.load( 'assets/images/Dice1.stl', function ( geometry ) {
 
 
+				cube = new THREE.Mesh( geometry, material);
+				cube.position.x = -50;
+				scene.add(cube);
+
+				cube2 = new THREE.Mesh( geometry, material);
+				cube2.position.x = 50;
+			animate()
+			scene.add(cube2);  		
+			renderer.render( scene, camera );	
+			 });
+
+
+			//Stop points for 3 results 
+			var paper1 = [0.3,-1.6, 0.4];
+			var rock1 = [1.8, -1.65, 0.3];
+			var scissors1 = [0, 0, 0];
+
+			var paper2 = [-0.05, 1.5, -0.2];
+			var rock2 = [-1.2, 1.55, -0.3];
+			var scissors2 = [0,0,0];
+			var speed = 0.3;   			
+			var rotate = true;
+
+			var target1 = paper1;
+  			var target2 = rock2;
+
+
+  			var IsSameAngle = function(x, y)
+  			{
+  				var diff = Math.abs(x - y);
+  				return Math.abs(diff-Math.round(diff / Math.PI) * Math.PI) < 0.006;
+  			}
+
+		 	var animate = function () {
+			 	
+			 	requestAnimationFrame( animate );
+
+			 	if (rotate)
+			 	{
+			 		if (speed < 0.01)
+				 	{
+				 		rotate = false;
+				 		if (!IsSameAngle(cube.rotation.x, target1[0]))
+				 		{
+			 				cube.rotation.x -= speed;
+			 				rotate = true;
+				 		}
+				 		if (!IsSameAngle(cube.rotation.y, target1[1]))
+				 		{
+			 				cube.rotation.y -= speed;
+			 				rotate = true;
+				 		}
+				 		if (!IsSameAngle(cube.rotation.z, target1[2]))
+				 		{
+			 				cube.rotation.z -= speed;
+			 				rotate = true;
+				 		}
+				 		if (!IsSameAngle(cube2.rotation.x, target2[0]))
+				 		{
+			 				cube2.rotation.x -= speed;
+			 				rotate = true;
+				 		}
+				 		if (!IsSameAngle(cube2.rotation.y, target2[1]))
+				 		{
+			 				cube2.rotation.y -= speed;
+			 				rotate = true;
+				 		}
+				 		if (!IsSameAngle(cube2.rotation.z, target2[2]))
+				 		{
+			 				cube2.rotation.z -= speed;
+			 				rotate = true;
+				 		}
+				 	}
+				 	else
+				 	{
+					 	cube.rotation.x -= speed;
+					 	cube.rotation.y -= speed;
+					 	//cube.rotation.z -= speed * 3;
+
+					 	cube2.rotation.x -= speed * 0.8;
+					 	cube2.rotation.y -= speed * 1.2;
+					 	//cube2.rotation.z -= speed;
+					 	speed = speed - 0.001;
+				 	}
+
+			 
+			 	renderer.render( scene, camera );	
+
+			 	}
+			 }
+
+
+
+
+
+
+
+
+
+
+
+
+// Firebase
 	const firebaseConfig = {
 	  apiKey: "AIzaSyCmaNJzL_ZrCwE1DTPCdB0YkCICRCUImBM",
 	  authDomain: "rpg-multiplayer-7748c.firebaseapp.com",
@@ -60,6 +182,25 @@ $(document).ready(function () {
 		  }
 
 		});
+
+
+
+	var user1 = {
+				    name: "",
+				    choice: "",
+				    result: "",
+				  };
+
+	var user2 = {
+				    name: "",
+				    choice: "",
+				    result: "",
+				  };
+	var message;
+	var self = "";
+
+
+
 
 
 
@@ -149,6 +290,9 @@ $(document).ready(function () {
 
 
 
+
+
+
 	//users name and choice value change listener 
 	database.ref("/users").on("value", function(snapshot) {
   		
@@ -180,6 +324,10 @@ $(document).ready(function () {
       console.log("The read failed: " + errorObject.code);
 });
 
+
+
+
+
 	
 
 	//users message value change listener 
@@ -189,6 +337,10 @@ $(document).ready(function () {
  		
 		$("#messageHistory").append(message);
 	});
+
+
+
+
 
 
 
@@ -235,6 +387,11 @@ $(document).ready(function () {
 
 
 
+
+
+
+
+
 	//submit choice on click
 	$(document).on("click", ".choices", function(event) {
 
@@ -259,6 +416,11 @@ $(document).ready(function () {
 
 				
 	});
+
+
+
+
+
 
 
 

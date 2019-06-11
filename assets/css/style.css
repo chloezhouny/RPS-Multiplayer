@@ -23,14 +23,6 @@ header
 	height: 15%;
 }
 
-main
-{
-	min-height: 100vh;
-	clear: both;
-}
-
-
-
 #navBar h3
 {
 	background-color: black;
@@ -48,4 +40,44 @@ main
 	right: 2%;
 
 
+}
+
+
+main
+{
+	min-height: 100vh;
+	clear: both;
+}
+
+#content
+{
+	position: absolute;
+	top: 65%;
+	width: 100%;
+	z-index: 100;
+	display:block;
+}
+
+canvas 
+{ 	width: 30%; 
+	height: 20%;
+	position: absolute;
+	top: 13.5%;
+	left: 25%;
+
+}
+
+
+#nameContainer, #choiceContainer, #resultContainer, #messageHistoryContainer, #chatContainer
+{
+	margin: 0 auto;
+}
+#message
+{
+	width: 60%;
+}
+
+#messageHistory
+{
+	overflow: hidden;
 }
