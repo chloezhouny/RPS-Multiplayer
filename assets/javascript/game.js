@@ -13,8 +13,8 @@ $(document).ready(function () {
 
 
 
-	var target1 = "sissors";
-	var target2 = "sissors";
+	var target1;
+	var target2;
 
 
 	//Give light
@@ -60,13 +60,13 @@ $(document).ready(function () {
 	var dict1 = {
 	 'paper' :[0.3,-1.6, 0.4],
 	 'rock' : [1.8, -1.65, 0.3],
-	'scissor' : [0, 0, 0]
+	'scissors' : [0, 0, 0]
 	}
 
 	var dict2 = {
 	 'paper' :[-0.05, 1.5, -0.2],
 	 'rock' : [-1.2, 1.55, -0.3],
-	 'scissor':  [0, 0, 0]
+	 'scissors':  [0, 0, 0]
 	}
 
 	var speed = 0.3;   			
@@ -338,13 +338,16 @@ $(document).ready(function () {
 			if (self === "user1")
 			{
 				target1 = dict1[user1.choice];
-				target2 = dict2[user1.choice]
+				target2 = dict2[user2.choice]
 			}
 			else if (self === "user2")
 			{
-				target2 = dict1[user1.choice];
-				target1 = dict2[user2.choice];
+				target2 = dict2[user1.choice];
+				target1 = dict1[user2.choice];
 			}
+
+			speed = 0.3;   			
+			rotate = true;
 
 			animate();
 			setTimeout(function(){

@@ -69,25 +69,16 @@
 
   				cube2 = new THREE.Mesh( geometry, material);
   				cube2.position.x = 50;
+
+  				speed = 0.3;   			
+  				rotate = true;
 				animate()
 				scene.add(cube2);  		
 				renderer.render( scene, camera );	
  			 });
 
-
-  			//Stop points for 3 results 
-			var paper1 = [0.3,-1.6, 0.4];
-			var rock1 = [1.8, -1.65, 0.3];
-			var scissors1 = [0, 0, 0];
-
-			var paper2 = [-0.05, 1.5, -0.2];
-			var rock2 = [-1.2, 1.55, -0.3];
-			var scissors2 = [0,0,0];
 			var speed = 0.3;   			
   			var rotate = true;
-
-  			var target1 = paper1;
-  			var target2 = rock2;
 
 
   			var IsSameAngle = function(x, y)
