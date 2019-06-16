@@ -248,38 +248,38 @@ $(document).ready(function () {
 				console.log("else");
 				if ((user1Choice=== "rock") && (user2Choice === "paper") )
 				{
-					user1.result = "You Lose";
-					user2.result = "You Win";		
+					user1.result = "You Lose..";
+					user2.result = "You Win!";		
 				}
 
 				else if ((user1Choice === "rock") && (user2Choice === "scissors"))
 				{
-					user1.result= "You Win";
-					user2.result = "You Lose";		
+					user1.result= "You Win!";
+					user2.result = "You Lose..";		
 				}
 
 				else if ((user1Choice === "paper") && (user2Choice === "rock"))
 				{
-					user1.result = "You Win";
-					user2.result = "You Lose";		
+					user1.result = "You Win!";
+					user2.result = "You Lose..";		
 				}
 
 				else if ((user1Choice === "paper") && (user2Choice === "scissors")) 
 				{
-					user1.result = "You Lose";
-					user2.result = "You Win";		
+					user1.result = "You Lose..";
+					user2.result = "You Win!";		
 				}
 
 				else if ((user1Choice === "scissors") && (user2Choice === "paper")) 
 				{
-					user1.result = "You Win";
-					user2.result= "You Lose";		
+					user1.result = "You Win!";
+					user2.result= "You Lose..";		
 				}
 
 				else if ((user1Choice === "scissors") && (user2Choice === "rock")) 
 				{
-					user1.result = "You Lose";
-					user2.result = "You Win";		
+					user1.result = "You Lose..";
+					user2.result = "You Win!";		
 				}
 
 			}
@@ -308,6 +308,10 @@ $(document).ready(function () {
 //Start Game
 	$("#nameContainer").show(); 
 	$("#choiceContainer").hide();
+	$("#resultContainer").hide();
+	$("#chatContainer").hide();
+
+
 	var start = false;
 
 
@@ -328,13 +332,18 @@ $(document).ready(function () {
 
 		  	user2.name = snapshot.child("user2").val().name;
 		  	user2.choice = snapshot.child("user2").val().choice;
-		  	$("#choiceContainer").show();
-			$("#startContainer").hide();
 
+		  	$("#choiceContainer").show();
+		  	$("#chatContainer").show();
+			$("#resultContainer").hide();
 		  	
 		}
 		 if ((snapshot.child("user1").child("choice").exists() && (snapshot.child("user2").child("choice").exists())))
 		{
+
+			$("#resultContainer").show();
+			$("#choiceContainer").hide();
+
 			if (self === "user1")
 			{
 				target1 = dict1[user1.choice];
@@ -353,10 +362,10 @@ $(document).ready(function () {
 			setTimeout(function(){
 				
 				getResult();
+
 				setTimeout(function()
 				{
-					$("#result").html("");
-							
+					$("#result").html("");					
 					database.ref("/users/user1").child('choice').set(null);
 					database.ref("/users/user2").child('choice').set(null);
 
@@ -385,7 +394,8 @@ $(document).ready(function () {
 
 		message = snapshot.val();
  		
-		$("#messageHistory").append(message);
+		$("#messageHistory").html(message);
+
 	});
 
 
@@ -415,7 +425,8 @@ $(document).ready(function () {
 			  			name: name,
 			  		});
 			  		console.log(self);
-			  		$("#nameContainer").hide();		
+			  		$("#nameContainer").hide();	
+
 			  	}
 			  	else if (!snapshot.hasChild('user2'))
 				{
@@ -424,7 +435,7 @@ $(document).ready(function () {
 			  			name: name,
 			  		});
 			  		console.log(self);
-			  		$("#nameContainer").hide();		
+			  		$("#nameContainer").hide();	
 			  		
 			  		start = true;
 			  		
@@ -434,6 +445,8 @@ $(document).ready(function () {
 			  		alert("Only two users are allowed to play.");
 
 			  	}
+
+
 		  })   
 	    });
 
@@ -464,6 +477,7 @@ $(document).ready(function () {
 			  		{
 
 			  			database.ref("/users/user2").child('choice').set(choice);
+			  			
 			  		}
 				
 	});

@@ -11,6 +11,7 @@ body
 	background-color: #F0F0F0;
 	background-size: cover;
 	min-height: 100vh;
+
 }
 
 
@@ -70,25 +71,69 @@ canvas
 }
 
 
-#nameContainer, #choiceContainer, #resultContainer, #messageHistoryContainer, #chatContainer
+#nameContainer, #choiceContainer, #resultContainer, #chatContainer
 {
 	margin: 0 auto;
+	position: absolute;
+	margin-left: 11%;
 }
 #message
 {
 	width: 60%;
+	font-family: 'Roboto Condensed', sans-serif;
 }
 
 #messageHistory
 {
+	font-size: 15px;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+#messageHistoryContainer
+{
 	overflow: hidden;
+
 }
 
 #nameContainer
 {
-	margin-top: 4%;
+	margin-top: 5%;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+ #resultContainer
+{
+
+ 	padding-top: 8%;
+ 	font-family: 'Lobster Two', cursive;
+ 	font-size: 19px;
+ 	font-weight: bold;
+
+ }
+
+#choiceContainer
+{
+	padding-top: 8%;
+	font-family: 'Roboto Condensed', sans-serif;
+
 }
 #chatContainer
 {
-	margin-top: 7%;
+	position: fixed;
+	bottom: 0;
+	font-family: 'Roboto Condensed', sans-serif;
+
 }
+
+#submitMessage
+{
+	margin-left: 2%;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+#submitName
+{
+	 font-family: 'Lobster Two', cursive;
+	 margin-left: 25%;
+	 margin-top: 27%;
+}
+
