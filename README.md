@@ -4,13 +4,16 @@ This project builds a Rock Paper and Scissors as online multiplayer game, all wi
 
 Deployed Link: https://chloezhouny.github.io/RPS-Multiplayer/
 <br>
+<br>
 
-#### Demo 
+## Demo 
 
 ![](assets/images/demo.gif)
 
+<br>
+<br>
 
-#### Technology Used
+## Technology Used
 
 
 * HTML
@@ -20,6 +23,7 @@ Deployed Link: https://chloezhouny.github.io/RPS-Multiplayer/
 * Firebase
 * Three.js
 
+<br>
 
-#### Author
+## Author
 Chloe Zhou
